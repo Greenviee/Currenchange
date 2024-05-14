@@ -1,14 +1,94 @@
 body {
     margin: 0;
     background-color: #EEEEEE;
+    margin-top: 140px;
 }
 
 #navbar {
-    background-color: aquamarine;
+    background: linear-gradient(skyblue, navy);
     padding: 0px;
     display: flex;
     justify-content: space-between;
+    align-items: center;
     padding: 0.5rem;
+    position: fixed;
+    top: 0;
+    width: 100%;
+}
+
+.search {
+    position: relative;
+    width: 350px;
+    margin-right: 50px;
+}
+
+.search input {
+    width: 100%;
+    height: 40px;
+    border: 1px solid #bbb;
+    border-radius: 8px;
+    padding: 10px 12px;
+    font-size: 14px;
+    font-size: 20px;
+}
+
+.search img {
+    position: absolute;
+    width: 40px;
+    right: 0px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+#logo-image {
+    width: 300px;
+    height: 80px;
+    padding: 10px;
+}
+
+#expand-search {
+    background-color: white;
+    position: absolute;
+    top: 120px;
+    height: 250px;
+    width: 100%;
+    display: none;
+    justify-content: center;
+    align-items: center;
+}
+
+#expand-search input {
+    width: 95%;
+    height: 50%;
+    border: 0;
+    border-bottom: 1px solid lightslategrey;
+    font-size: 50px;
+    padding-left: 10px;
+}
+
+#expand-search img {
+    position: absolute;
+    width: 60px;
+    right: 60px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+#close-btn {
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    right: 20px;
+    top: 5%;
+    background-color: white;
+    font-size: 30px;
+    border: 0;
+    border-radius: 100%;
+}
+
+#close-btn:hover {
+    background-color: gray;
+    color: white;
 }
 
 h1 {
@@ -17,6 +97,7 @@ h1 {
 
 #todaycurrent {
     font-size: 30px;
+    font-weight: 600;
 }
 
 #viewtime {
@@ -34,7 +115,8 @@ h1 {
     flex-basis: 23%;
     flex-shrink: 1;
     flex-grow: 1;
-    margin: 1%
+    padding: 0.5%;
+    background-color: white;
 }
 
 @media screen and (max-width: 1200px) and (min-width: 600px) {
@@ -59,6 +141,7 @@ h1 {
 
 .country-name {
     font-weight: 700;
+    font-size: 20px;
 }
 
 .unit {
@@ -78,4 +161,26 @@ h1 {
 
 .table-text-right {
     float: right;
+}
+
+.wrap-container {
+    height: auto;
+    min-height: 100%;
+    padding-bottom: 120px;
+}
+
+.home-container {
+    min-height: 600px;
+}
+
+footer {
+    height: 60px;
+    position: relative;
+    transform: translateY(0%);
+    border-top: 1px solid black;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: gray;
 }

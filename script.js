@@ -16,7 +16,7 @@ const day2 = (currentDate.getDate() - 1).toString().padStart(2, '0');
 const yyyymmdd = year2 + month2 + day2;
 
 var viewtime = document.getElementById('viewtime');
-viewtime.textContent = '(조회시간 : ' + yyyymmdd + ')';
+viewtime.textContent = '(조회시간 : ' + formattedDate + ')';
 
 var apiUrl = 'https://www.koreaexim.go.kr/site/program/financial/exchangeJSON?authkey=RZuk2sK0yoZiufnYTZbZQvm8wxo5wJvY&searchdate=' + yyyymmdd + '&data=AP01';
 
@@ -94,7 +94,16 @@ fetch(apiUrl)
         send4.textContent = `null`;
         var get4 = document.getElementById('get4');
         get4.textContent = `null`;
+
     })
     .catch(error => {
         console.error('Error fetching data:', error);
     });
+
+function expand_search() {
+    document.getElementById('expand-search').style.display = 'flex'
+}
+
+function close_search() {
+    document.getElementById('expand-search').style.display = 'none'
+}
