@@ -20,7 +20,8 @@
 
     <div id="expand-search">
         <input type="text" placeholder="검색어를 입력하세요. (통화 코드)" id="expand-input">
-        <a href="searchpage.html"><img src="https://cdn-icons-png.flaticon.com/512/2866/2866321.png" alt=""></a>
+        <button class="search-btn" onclick="redirectToSearchPage()"><img
+                src="https://cdn-icons-png.flaticon.com/512/2866/2866321.png" alt=""></button>
         <button id="close-btn" onclick="close_search()">X</button>
     </div>
 
@@ -30,7 +31,7 @@
     </div>
     <br>
     <div id="current-table">
-        <div class="box">
+        <div class="box" id="left-box">
             <div class="country">
                 <img src="#" class="flag"><span class="country-name"><span id="country1"></span></span><span
                     class="unit"><span id="unit1"></span></span>
@@ -117,7 +118,7 @@
                 </div>
             </div>
         </div>
-        <div class="box">
+        <div class="box" id="right-box">
             <div class="country">
                 <img src="#" class="flag"><span class="country-name"><span id="country4"></span></span><span
                     class="unit"><span id="unit4"></span></span>

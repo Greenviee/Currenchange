@@ -1,3 +1,22 @@
+function expand_search() {
+    document.getElementById('expand-search').style.display = 'flex'
+}
+
+function close_search() {
+    document.getElementById('expand-search').style.display = 'none'
+}
+
+function redirectToSearchPage() {
+    var inputValue = document.getElementById('expand-input').value;
+    window.location.href = 'searchpage.html?search=' + encodeURIComponent(inputValue);
+}
+
+function showSearchResult() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const searchValue = urlParams.get('search');
+    document.getElementById('searchtest').textContent = searchValue;
+}
+
 const currentDate = new Date();
 
 const year = currentDate.getFullYear();
@@ -12,7 +31,7 @@ const formattedDate = `${year}-${String(month).padStart(2, '0')}-${String(day).p
 const year2 = currentDate.getFullYear();
 const month2 = (currentDate.getMonth() + 1).toString().padStart(2, '0');
 //11시 이전 테스트시 null값 반환해서 전 날로 테스트
-const day2 = (currentDate.getDate() - 1).toString().padStart(2, '0');
+const day2 = (currentDate.getDate() - 2).toString().padStart(2, '0');
 const yyyymmdd = year2 + month2 + day2;
 
 var viewtime = document.getElementById('viewtime');
@@ -94,16 +113,7 @@ fetch(apiUrl)
         send4.textContent = `null`;
         var get4 = document.getElementById('get4');
         get4.textContent = `null`;
-
     })
     .catch(error => {
         console.error('Error fetching data:', error);
     });
-
-function expand_search() {
-    document.getElementById('expand-search').style.display = 'flex'
-}
-
-function close_search() {
-    document.getElementById('expand-search').style.display = 'none'
-}

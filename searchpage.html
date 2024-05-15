@@ -6,6 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Currenchange</title>
     <link rel="stylesheet" href="style.css">
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            showSearchResult();
+        });
+    </script>
 </head>
 
 <body>
@@ -18,15 +23,15 @@
         </div>
     </nav>
 
-    <div>
-        <span id="searchtest">AAA</span>
-    </div>
-
     <div id="expand-search">
         <input type="text" placeholder="검색어를 입력하세요. (통화 코드)" id="expand-input">
-        <a href="searchpage.html"><img src="https://cdn-icons-png.flaticon.com/512/2866/2866321.png" alt=""></a>
+        <button class="search-btn" onclick="redirectToSearchPage()"><img
+                src="https://cdn-icons-png.flaticon.com/512/2866/2866321.png" alt=""></button>
         <button id="close-btn" onclick="close_search()">X</button>
     </div>
+
+    <div id="searchtest"></div>
+
 
     <div class="wrap-container">
         <div class="home-container">
