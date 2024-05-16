@@ -1,9 +1,18 @@
 function expand_search() {
-    document.getElementById('expand-search').style.display = 'flex'
+    document.getElementById('expand-search').style.display = 'flex';
+    var searchElements = document.getElementsByClassName('search');
+    for (var i = 0; i < searchElements.length; i++) {
+        searchElements[i].style.display = 'none';
+    }
+    document.getElementById('expand-input').focus();
 }
 
 function close_search() {
-    document.getElementById('expand-search').style.display = 'none'
+    document.getElementById('expand-search').style.display = 'none';
+    var searchElements = document.getElementsByClassName('search');
+    for (var i = 0; i < searchElements.length; i++) {
+        searchElements[i].style.display = 'inline';
+    }
 }
 
 const currentDate = new Date();
@@ -20,10 +29,10 @@ const formattedDate = `${year}-${String(month).padStart(2, '0')}-${String(day).p
 const year2 = currentDate.getFullYear();
 const month2 = (currentDate.getMonth() + 1).toString().padStart(2, '0');
 //11시 이전 테스트시 null값 반환해서 전 날로 테스트
-const day2 = (currentDate.getDate() - 2).toString().padStart(2, '0');
+const day2 = (currentDate.getDate() - 3).toString().padStart(2, '0');
 const yyyymmdd = year2 + month2 + day2;
 
-const yesterday = (currentDate.getDate() - 3).toString().padStart(2, '0');
+const yesterday = (currentDate.getDate() - 4).toString().padStart(2, '0');
 
 const yesterday_yyyymmdd = year2 + month2 + yesterday;
 
@@ -34,10 +43,11 @@ var apiUrlToday = 'https://www.koreaexim.go.kr/site/program/financial/exchangeJS
 
 var apiUrlYesterday = 'https://www.koreaexim.go.kr/site/program/financial/exchangeJSON?authkey=RZuk2sK0yoZiufnYTZbZQvm8wxo5wJvY&searchdate=' + yesterday_yyyymmdd + '&data=AP01';
 
-fetch(apiUrlToday)
-    .then(response => response.json())
+Promise.all([fetch(apiUrlToday), fetch(apiUrlYesterday)])
+    .then(responses => Promise.all(responses.map(response => response.json())))
     .then(data => {
-        var usdExchange = data.find(item => item.cur_unit === 'USD');
+        var usdExchange = data[0].find(item => item.cur_unit === 'USD');
+        var yesterdayusdExchange = data[1].find(item => item.cur_unit === 'USD');
         var country1 = document.getElementById('country1');
         country1.textContent = `${usdExchange.cur_nm}`;
         var unit1 = document.getElementById('unit1');
@@ -45,17 +55,27 @@ fetch(apiUrlToday)
         var exchange1 = document.getElementById('exchange-rate1');
         exchange1.textContent = `${usdExchange.deal_bas_r}`;
         var diff1 = document.getElementById('diff1');
-        diff1.textContent = `diff`;
+        var replaced_usddeal = usdExchange.deal_bas_r.replace(',', '');
+        var replaced_yesterdayusddeal = yesterdayusdExchange.deal_bas_r.replace(',', '');
+        var diff_value1 = parseFloat(replaced_usddeal) - parseFloat(replaced_yesterdayusddeal);
+        diff1.textContent = `${diff_value1.toFixed(2)}`;
+        if (diff_value1 > 0) {
+            document.getElementById('diff1').style.color = 'red';
+        }
+        else if (diff_value1 < 0) {
+            document.getElementById('diff1').style.color = 'blue';
+        }
         var buy1 = document.getElementById('buy1');
         buy1.textContent = `${usdExchange.ttb}`;
         var sell1 = document.getElementById('sell1');
         sell1.textContent = `${usdExchange.tts}`;
-        var send1 = document.getElementById('send1');
-        send1.textContent = `null`;
-        var get1 = document.getElementById('get1');
-        get1.textContent = `null`;
+        var send1 = document.getElementById('year1');
+        send1.textContent = `${usdExchange.yy_efee_r}`;
+        var get1 = document.getElementById('10day1');
+        get1.textContent = `${usdExchange.ten_dd_efee_r}`;
 
-        var eurExchange = data.find(item => item.cur_unit === 'EUR');
+        var eurExchange = data[0].find(item => item.cur_unit === 'EUR');
+        var yesterdayeurExchange = data[1].find(item => item.cur_unit === 'EUR');
         var country2 = document.getElementById('country2');
         country2.textContent = `${eurExchange.cur_nm}`;
         var unit2 = document.getElementById('unit2');
@@ -63,17 +83,27 @@ fetch(apiUrlToday)
         var exchange2 = document.getElementById('exchange-rate2');
         exchange2.textContent = `${eurExchange.deal_bas_r}`;
         var diff2 = document.getElementById('diff2');
-        diff2.textContent = `diff`;
+        var replaced_eurdeal = eurExchange.deal_bas_r.replace(',', '');
+        var replaced_yesterdayeurdeal = yesterdayeurExchange.deal_bas_r.replace(',', '');
+        var diff_value2 = parseFloat(replaced_eurdeal) - parseFloat(replaced_yesterdayeurdeal);
+        diff2.textContent = `${diff_value2.toFixed(2)}`;
+        if (diff_value2 > 0) {
+            document.getElementById('diff2').style.color = 'red';
+        }
+        else if (diff_value2 < 0) {
+            document.getElementById('diff2').style.color = 'blue';
+        }
         var buy2 = document.getElementById('buy2');
         buy2.textContent = `${eurExchange.ttb}`;
         var sell2 = document.getElementById('sell2');
         sell2.textContent = `${eurExchange.tts}`;
-        var send2 = document.getElementById('send2');
-        send2.textContent = `null`;
-        var get2 = document.getElementById('get2');
-        get2.textContent = `null`;
+        var send2 = document.getElementById('year2');
+        send2.textContent = `${eurExchange.yy_efee_r}`;
+        var get2 = document.getElementById('10day2');
+        get2.textContent = `${eurExchange.ten_dd_efee_r}`;
 
-        var jpyExchange = data.find(item => item.cur_unit === 'JPY(100)');
+        var jpyExchange = data[0].find(item => item.cur_unit === 'JPY(100)');
+        var yesterdayjpyExchange = data[1].find(item => item.cur_unit === 'JPY(100)');
         var country3 = document.getElementById('country3');
         country3.textContent = `${jpyExchange.cur_nm}`;
         var unit3 = document.getElementById('unit3');
@@ -81,17 +111,28 @@ fetch(apiUrlToday)
         var exchange3 = document.getElementById('exchange-rate3');
         exchange3.textContent = `${jpyExchange.deal_bas_r}`;
         var diff3 = document.getElementById('diff3');
-        diff3.textContent = `diff`;
+
+        var replaced_jpydeal = jpyExchange.deal_bas_r.replace(',', '');
+        var replaced_yesterdayjpydeal = yesterdayjpyExchange.deal_bas_r.replace(',', '');
+        var diff_value3 = parseFloat(replaced_jpydeal) - parseFloat(replaced_yesterdayjpydeal);
+        diff3.textContent = `${diff_value3.toFixed(2)}`;
+        if (diff_value3 > 0) {
+            document.getElementById('diff3').style.color = 'red';
+        }
+        else if (diff_value3 < 0) {
+            document.getElementById('diff3').style.color = 'blue';
+        }
         var buy3 = document.getElementById('buy3');
         buy3.textContent = `${jpyExchange.ttb}`;
         var sell3 = document.getElementById('sell3');
         sell3.textContent = `${jpyExchange.tts}`;
-        var send3 = document.getElementById('send3');
-        send3.textContent = `null`;
-        var get3 = document.getElementById('get3');
-        get3.textContent = `null`;
+        var send3 = document.getElementById('year3');
+        send3.textContent = `${jpyExchange.yy_efee_r}`;
+        var get3 = document.getElementById('10day3');
+        get3.textContent = `${jpyExchange.ten_dd_efee_r}`;
 
-        var cnhExchange = data.find(item => item.cur_unit === 'CNH');
+        var cnhExchange = data[0].find(item => item.cur_unit === 'CNH');
+        var yesterdaycnhExchange = data[1].find(item => item.cur_unit === 'CNH');
         var country4 = document.getElementById('country4');
         country4.textContent = `${cnhExchange.cur_nm}`;
         var unit4 = document.getElementById('unit4');
@@ -99,15 +140,24 @@ fetch(apiUrlToday)
         var exchange4 = document.getElementById('exchange-rate4');
         exchange4.textContent = `${cnhExchange.deal_bas_r}`;
         var diff4 = document.getElementById('diff4');
-        diff4.textContent = `diff`;
+        var replaced_cnhdeal = cnhExchange.deal_bas_r.replace(',', '');
+        var replaced_yesterdaycnhdeal = yesterdaycnhExchange.deal_bas_r.replace(',', '');
+        var diff_value4 = parseFloat(replaced_cnhdeal) - parseFloat(replaced_yesterdaycnhdeal);
+        diff4.textContent = `${diff_value4.toFixed(2)}`;
+        if (diff_value4 > 0) {
+            document.getElementById('diff4').style.color = 'red';
+        }
+        else if (diff_value4 < 0) {
+            document.getElementById('diff4').style.color = 'blue';
+        }
         var buy4 = document.getElementById('buy4');
         buy4.textContent = `${cnhExchange.ttb}`;
         var sell4 = document.getElementById('sell4');
         sell4.textContent = `${cnhExchange.tts}`;
-        var send4 = document.getElementById('send4');
-        send4.textContent = `null`;
-        var get4 = document.getElementById('get4');
-        get4.textContent = `null`;
+        var send4 = document.getElementById('year4');
+        send4.textContent = `${cnhExchange.yy_efee_r}`;
+        var get4 = document.getElementById('10day4');
+        get4.textContent = `${cnhExchange.ten_dd_efee_r}`;
     })
     .catch(error => {
         console.error('Error fetching data:', error);
@@ -136,7 +186,13 @@ function viewSearchResult() {
             var replaced_todaydeal = searchExchange.deal_bas_r.replace(',', '');
             var replaced_yesterdaydeal = yesterdayExchange.deal_bas_r.replace(',', '');
             var diff_value5 = parseFloat(replaced_todaydeal) - parseFloat(replaced_yesterdaydeal);
-            diff5.textContent = `${diff_value5}`;
+            diff5.textContent = `${diff_value5.toFixed(2)}`;
+            if (diff_value5 > 0) {
+                document.getElementById('diff-search').style.color = 'red';
+            }
+            else if (diff_value5 < 0) {
+                document.getElementById('diff-search').style.color = 'blue';
+            }
             var buy5 = document.getElementById('buy-search');
             buy5.textContent = `${searchExchange.ttb}`;
             var sell5 = document.getElementById('sell-search');

@@ -28,7 +28,6 @@ body {
     border: 1px solid #bbb;
     border-radius: 8px;
     padding: 10px 12px;
-    font-size: 14px;
     font-size: 20px;
 }
 
@@ -92,6 +91,148 @@ body {
     border-radius: 100%;
 }
 
+@media screen and (max-width: 1200px) and (min-width: 600px) {
+    .search {
+        position: relative;
+        width: 300px;
+        margin-right: 50px;
+    }
+
+    .search input {
+        width: 100%;
+        height: 32px;
+        border: 1px solid #bbb;
+        border-radius: 8px;
+        padding: 10px 12px;
+        font-size: 16px;
+    }
+
+    .search img {
+        position: absolute;
+        width: 30px;
+        right: 0px;
+        top: 50%;
+        transform: translateY(-50%);
+    }
+
+    #logo-image {
+        width: 200px;
+        height: 46px;
+        padding: 10px;
+    }
+
+    #expand-search {
+        background-color: white;
+        position: absolute;
+        top: 86px;
+        height: 200px;
+        width: 100%;
+        display: none;
+        justify-content: center;
+        align-items: center;
+    }
+
+    #expand-search input {
+        width: 95%;
+        height: 50%;
+        border: 0;
+        border-bottom: 1px solid lightslategrey;
+        font-size: 40px;
+        padding-left: 10px;
+    }
+
+    #expand-search img {
+        position: absolute;
+        width: 50px;
+        right: 50px;
+        top: 50%;
+        transform: translateY(-50%);
+    }
+
+    #close-btn {
+        position: absolute;
+        width: 30px;
+        height: 30px;
+        right: 20px;
+        top: 5%;
+        background-color: white;
+        font-size: 20px;
+        border: 0;
+        border-radius: 100%;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .search {
+        position: relative;
+        width: 200px;
+        margin-right: 50px;
+    }
+
+    .search input {
+        width: 100%;
+        height: 26px;
+        border: 1px solid #bbb;
+        border-radius: 8px;
+        padding: 10px 12px;
+        font-size: 12px;
+    }
+
+    .search img {
+        position: absolute;
+        width: 20px;
+        right: 0px;
+        top: 50%;
+        transform: translateY(-50%);
+    }
+
+    #logo-image {
+        width: 130px;
+        height: 30px;
+        padding: 10px;
+    }
+
+    #expand-search {
+        background-color: white;
+        position: absolute;
+        top: 70px;
+        height: 120px;
+        width: 100%;
+        display: none;
+        justify-content: center;
+        align-items: center;
+    }
+
+    #expand-search input {
+        width: 95%;
+        height: 50%;
+        border: 0;
+        border-bottom: 1px solid lightslategrey;
+        font-size: 25px;
+        padding-left: 10px;
+    }
+
+    #expand-search img {
+        position: absolute;
+        width: 30px;
+        right: 30px;
+        top: 50%;
+        transform: translateY(-50%);
+    }
+
+    #close-btn {
+        position: absolute;
+        width: 30px;
+        height: 30px;
+        right: 20px;
+        top: 5%;
+        background-color: white;
+        font-size: 15px;
+        border: 0;
+        border-radius: 100%;
+    }
+}
+
 #close-btn:hover {
     background-color: gray;
     color: white;
@@ -101,7 +242,12 @@ h1 {
     font-size: 50px;
 }
 
+.large-text {
+    padding-left: 1%;
+}
+
 #todaycurrent {
+    padding-left: 1%;
     font-size: 30px;
     font-weight: 600;
 }
@@ -130,10 +276,12 @@ h1 {
 
 #left-box {
     border-left: none;
+    margin-left: 1%;
 }
 
 #right-box {
     border-right: none;
+    margin-right: 1%;
 }
 
 @media screen and (max-width: 1200px) and (min-width: 600px) {
@@ -259,4 +407,43 @@ footer {
 
 .searchpage-table-text {
     font-size: 40px;
+}
+
+@media screen and (max-width: 1200px) and (min-width: 600px) {
+    .searchpage-flag {
+        width: 60px;
+        height: 40px;
+    }
+
+    .searchpage-country-name {
+        font-weight: 700;
+        font-size: 50px;
+    }
+
+    .searchpage-unit {
+        font-size: 40px;
+        font-weight: 300;
+    }
+
+    .searchpage-exchange-rate {
+        font-weight: 700;
+        font-size: 50px;
+        color: green;
+    }
+
+    .searchpage-diff {
+        font-size: 40px;
+    }
+
+    .searchpage-table-text {
+        font-size: 40px;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .box {
+        flex-basis: 98%;
+        margin: 1%;
+        border: none;
+    }
 }
