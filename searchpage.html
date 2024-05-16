@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="style.css">
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            showSearchResult();
+            viewSearchResult();
         });
     </script>
 </head>
@@ -30,8 +30,43 @@
         <button id="close-btn" onclick="close_search()">X</button>
     </div>
 
-    <div id="searchtest"></div>
+    <div>
+        <h1>환율</h1>
+        <span id="todaycurrent">오늘의 환율</span> <span id="viewtime">(조회시간 : 2024-05-12 21:51:17)</span>
+    </div>
+    <br>
 
+    <div class="searchpage-box">
+        <button class="interest"><img src="https://cdn-icons-png.flaticon.com/512/93/93630.png" alt=""></button>
+        <div class="country">
+            <img src="#" class="searchpage-flag"><span class="searchpage-country-name"><span
+                    id="country-search"></span></span><span class="searchpage-unit"><span
+                    id="unit-search"></span></span>
+            <br>
+            <span class="searchpage-exchange-rate"><span id="exchange-rate-search"></span></span> <br>
+            <span class="searchpage-diff"><span id="diff-search"></span></span>
+            <br> <br>
+            <div class="searchpage-table-text">
+                <span class="table-text-left">현찰 살 때</span><span class="table-text-right"><span
+                        id="buy-search"></span></span>
+            </div>
+            <hr>
+            <div class="searchpage-table-text">
+                <span class="table-text-left">현찰 팔 때</span><span class="table-text-right"><span
+                        id="sell-search"></span></span>
+            </div>
+            <hr>
+            <div class="searchpage-table-text">
+                <span class="table-text-left">연 이자율</span><span class="table-text-right"><span
+                        id="year-search"></span></span>
+            </div>
+            <hr>
+            <div class="searchpage-table-text">
+                <span class="table-text-left">10일 이자율</span><span class="table-text-right"><span
+                        id="10day-search"></span></span>
+            </div>
+        </div>
+    </div>
 
     <div class="wrap-container">
         <div class="home-container">

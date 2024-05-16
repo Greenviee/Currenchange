@@ -6,17 +6,6 @@ function close_search() {
     document.getElementById('expand-search').style.display = 'none'
 }
 
-function redirectToSearchPage() {
-    var inputValue = document.getElementById('expand-input').value;
-    window.location.href = 'searchpage.html?search=' + encodeURIComponent(inputValue);
-}
-
-function showSearchResult() {
-    const urlParams = new URLSearchParams(window.location.search);
-    const searchValue = urlParams.get('search');
-    document.getElementById('searchtest').textContent = searchValue;
-}
-
 const currentDate = new Date();
 
 const year = currentDate.getFullYear();
@@ -34,12 +23,18 @@ const month2 = (currentDate.getMonth() + 1).toString().padStart(2, '0');
 const day2 = (currentDate.getDate() - 2).toString().padStart(2, '0');
 const yyyymmdd = year2 + month2 + day2;
 
+const yesterday = (currentDate.getDate() - 3).toString().padStart(2, '0');
+
+const yesterday_yyyymmdd = year2 + month2 + yesterday;
+
 var viewtime = document.getElementById('viewtime');
 viewtime.textContent = '(조회시간 : ' + formattedDate + ')';
 
-var apiUrl = 'https://www.koreaexim.go.kr/site/program/financial/exchangeJSON?authkey=RZuk2sK0yoZiufnYTZbZQvm8wxo5wJvY&searchdate=' + yyyymmdd + '&data=AP01';
+var apiUrlToday = 'https://www.koreaexim.go.kr/site/program/financial/exchangeJSON?authkey=RZuk2sK0yoZiufnYTZbZQvm8wxo5wJvY&searchdate=' + yyyymmdd + '&data=AP01';
 
-fetch(apiUrl)
+var apiUrlYesterday = 'https://www.koreaexim.go.kr/site/program/financial/exchangeJSON?authkey=RZuk2sK0yoZiufnYTZbZQvm8wxo5wJvY&searchdate=' + yesterday_yyyymmdd + '&data=AP01';
+
+fetch(apiUrlToday)
     .then(response => response.json())
     .then(data => {
         var usdExchange = data.find(item => item.cur_unit === 'USD');
@@ -117,3 +112,42 @@ fetch(apiUrl)
     .catch(error => {
         console.error('Error fetching data:', error);
     });
+
+function redirectToSearchPage() {
+    var inputValue = document.getElementById('expand-input').value;
+    window.location.href = 'searchpage.html?search=' + encodeURIComponent(inputValue);
+}
+
+function viewSearchResult() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const searchValue = urlParams.get('search');
+    Promise.all([fetch(apiUrlToday), fetch(apiUrlYesterday)])
+        .then(responses => Promise.all(responses.map(response => response.json())))
+        .then(data => {
+            var searchExchange = data[0].find(item => item.cur_unit === searchValue);
+            var yesterdayExchange = data[1].find(item => item.cur_unit === searchValue);
+            var country5 = document.getElementById('country-search');
+            country5.textContent = `${searchExchange.cur_nm}`;
+            var unit5 = document.getElementById('unit-search');
+            unit5.textContent = `(${searchExchange.cur_unit})`;
+            var exchange5 = document.getElementById('exchange-rate-search');
+            exchange5.textContent = `${searchExchange.deal_bas_r}`;
+            var diff5 = document.getElementById('diff-search');
+            var replaced_todaydeal = searchExchange.deal_bas_r.replace(',', '');
+            var replaced_yesterdaydeal = yesterdayExchange.deal_bas_r.replace(',', '');
+            var diff_value5 = parseFloat(replaced_todaydeal) - parseFloat(replaced_yesterdaydeal);
+            diff5.textContent = `${diff_value5}`;
+            var buy5 = document.getElementById('buy-search');
+            buy5.textContent = `${searchExchange.ttb}`;
+            var sell5 = document.getElementById('sell-search');
+            sell5.textContent = `${searchExchange.tts}`;
+            var send5 = document.getElementById('year-search');
+            send5.textContent = `${searchExchange.yy_efee_r}`;
+            var get5 = document.getElementById('10day-search');
+            get5.textContent = `${searchExchange.ten_dd_efee_r}`;
+        })
+        .catch(error => {
+            console.error('Error fetching data:', error);
+        });
+
+}

@@ -160,21 +160,26 @@ h1 {
 
 .country-name {
     font-weight: 700;
-    font-size: 20px;
+    font-size: 30px;
 }
 
 .unit {
     float: right;
     font-weight: 300;
+    font-size: 20px;
 }
 
 .exchange-rate {
     font-weight: 700;
-    font-size: 30px;
+    font-size: 40px;
     color: green;
 }
 
 .diff {
+    font-size: 30px;
+}
+
+.table-text {
     font-size: 20px;
 }
 
@@ -204,12 +209,54 @@ footer {
     background-color: gray;
 }
 
-.box-searchpage {
+.interest {
+    float: right;
+    width: 60px;
+    height: 60px;
+    background-color: white;
+    border: none;
+}
+
+.interest img {
+    width: 50px;
+    height: 50px;
+}
+
+.searchpage-box {
     min-height: 300px;
-    flex-basis: 23%;
+    flex-basis: 92%;
     flex-shrink: 1;
     flex-grow: 1;
-    padding: 0.5%;
+    margin: 2%;
+    padding: 1%;
     background-color: white;
+}
+
+.searchpage-flag {
+    width: 60px;
+    height: 40px;
+}
+
+.searchpage-country-name {
+    font-weight: 700;
     font-size: 50px;
+}
+
+.searchpage-unit {
+    font-size: 40px;
+    font-weight: 300;
+}
+
+.searchpage-exchange-rate {
+    font-weight: 700;
+    font-size: 50px;
+    color: green;
+}
+
+.searchpage-diff {
+    font-size: 40px;
+}
+
+.searchpage-table-text {
+    font-size: 40px;
 }
